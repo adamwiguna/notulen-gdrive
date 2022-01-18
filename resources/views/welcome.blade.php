@@ -38,7 +38,7 @@
 </head>
 <body class="text-center">
 
-<main class="form-signin">
+  <main class="form-signin">
   
   <img class="mb-4" src="/Lambang_Kabupaten_Tabanan.png" alt="" width="150" height="150">
   <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
