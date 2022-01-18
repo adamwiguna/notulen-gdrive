@@ -8,9 +8,10 @@
     <meta name="generator" content="Hugo 0.84.0">
     <title>Notulen · Halaman Log In</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
 
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -43,11 +44,10 @@
   <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
   @if (session()->has('loginError'))
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {{ session('loginError') }}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
+  <div class="alert alert-danger alert-dismissible fade show text-start" role="alert">
+      <i class="bi bi-exclamation-triangle"></i>
+      {!! session('loginError') !!}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>   
   @endif
 

@@ -38,6 +38,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('position',function () {
             return view('admin.position.index', ['sidebar' => 'position']);
         })->name('position.index');
+        Route::get('password',function () {
+            return view('admin.setting.change-password', [
+                'sidebar' => 'password'
+            ]);
+        })->name('password');
         
     });
 
@@ -55,6 +60,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('mutasi',function () {
             return view('operator.user.mutasi', ['sidebar' => 'mutasi']);
         })->name('user.mutasi');
+        Route::get('password',function () {
+            return view('operator.setting.change-password', [
+                'sidebar' => 'password',
+            ]);
+        })->name('password');
     });
 
     Route::prefix('user')->name('user.')->group(function () {

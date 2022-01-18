@@ -31,6 +31,14 @@
     <div class="row">
         <div class="col-3">
             <div class="form-check">
+                <input wire:model="free" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Tanpa User
+                </label>
+              </div>
+        </div>
+        <div class="col-3">
+            <div class="form-check">
                 <input wire:model="canShare" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                     Mengirim Keluar
@@ -49,25 +57,42 @@
     
     {{ $positions->links() }}
     
-    Total data : <span class="badge bg-success">{{ $positions->total() }}</span>
+    Total data : 
+    <span class="badge bg-success small">
+        <div wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, canShare, canReceive, free">
+            {{ $positions->total() }}
+        </div>
+        <div wire:loading wire:target="cari, previousPage, nextPage, gotoPage, canShare, canReceive, free">
+            <div class=" text-center text-small small">
+                <div class="spinner-border spinner-border-sm small" role="status">
+                  <span class="visually-hidden small ">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </span> 
+    
     <div class="table-responsive">
         <table class="table table-responsive table-striped table-sm">
             <thead>
                 <tr>
                     <th scope="col" >Jabatan</th>
                     <th scope="col" >Singkatan / Alias</th>
+                    <th scope="col" >Notulen Diterima</th>
                     <th scope="col" >User</th>
                     <th scope="col" ></th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($positions as $position)
-                    <tr wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, canShare, canReceive">
+                    <tr wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, canShare, canReceive, free, perPage">
                         <td>
                             {{ $position->id }} |
                             {{ $position->name }} {!! $position->is_staff ? '<i class="bi bi-people-fill"></i>' : '' !!}
                         </td> 
                         <td>{{ $position->alias }} {!! $position->is_staff ? '<i class="bi bi-people-fill"></i>' : '' !!}</td>
+                        <td>
+                            {{ $position->asReceiver->count() }}
+                        </td>
                         <td>
                             <div class=" fst-italic"> 
                                 @if ($position->users->count() == 0)
@@ -78,6 +103,7 @@
                                 @endforeach
                             </div> 
                         </td>
+                       
                         <td>
                             <a wire:click="getPosition({{ $position }})" class="btn btn-sm btn-warning"  data-bs-toggle="modal" data-bs-target="#editPositionModal">
                                 <i class="bi bi-pencil-square"></i> 
@@ -96,7 +122,7 @@
                 @endforelse
             </tbody>
         </table>
-        <div wire:loading.inline wire:target="cari, previousPage, nextPage, gotoPage, canShare, canReceive">
+        <div wire:loading.inline wire:target="cari, previousPage, nextPage, gotoPage, canShare, canReceive, free, perPage">
             <div class=" text-center ">
                 <div class="spinner-border" role="status">
                   <span class="visually-hidden">Loading...</span>

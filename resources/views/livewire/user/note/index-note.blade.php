@@ -15,8 +15,12 @@
                 <input wire:model="settings" class="btn-check mt-3" type="checkbox" id="flexCheckDefault0" onclick="this.blur();"  value="" >
                 <label class="btn small btn-sm btn-secondary {{ $settings == true ? '' : 'bg-transparent text-dark' }} mt-3" for="flexCheckDefault0" onclick="this.blur();">
                     <small>
-                        Setting Pencarian <i class="bi bi-gear-fill"></i> 
-
+                        @if ($settings == true)
+                            <i class="bi bi-chevron-down"></i> 
+                        @else    
+                            <i class="bi bi-chevron-up"></i> 
+                        @endif 
+                        Setting Pencarian  <i class="bi bi-gear-fill"></i> 
                     </small>
                 </label> 
             </div>

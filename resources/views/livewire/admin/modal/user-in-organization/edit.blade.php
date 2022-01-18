@@ -13,18 +13,23 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div  wire:loading.remove wire:target="createUser, getUser" class="modal-body">
-                {{ $userSlug }}
+                {{-- {{ $userSlug }} --}}
                 <div class="form-floating mb-3">
-                    <input disabled wire:model="userNIP" type="text" class="form-control" id="floatingName" placeholder="name">
+                    <input disabled wire:model="userNIP" type="text" class="form-control  @error('userNIP') is-invalid @enderror" id="floatingName" placeholder="name">
                     <label for="floatingName">N I P / Username</label>
-                    {{-- @error('userNIP')
+                    @error('userNIP')
                       <span class="invalid-feedback">
                           <strong>{{ $message }}</strong>
                       </span>
-                    @enderror --}}
+                    @enderror
                 </div>
+                {{-- {{ $userNIP }} <br>
+                {{ $userName }} <br>
+                {{ $userPassword }} <br>
+                {{ $userSlug }} <br>
+                {{ $positionId }} <br> --}}
                 <div class="form-floating mb-3">
-                    <input wire:model="userPassword" type="text" class="form-control" id="floatingName" placeholder="name">
+                    <input wire:model="newPassword" type="text" class="form-control" id="floatingName" placeholder="name">
                     <label for="floatingName">Password (Kosongkan jika tidak ada perubahan)</label>
                     {{-- @error('userPassword')
                       <span class="invalid-feedback">
@@ -85,7 +90,7 @@
                     type="submit" 
                     class="btn btn-primary mt-3" 
                     data-bs-dismiss="modal" 
-                    {{-- {{ $disabled == true ? 'disabled' :'' }} --}}
+                    {{ $disabled == true ? 'disabled' :'' }}
                 >
                     <i class="bi bi-save"></i>
                     Simpan
@@ -94,3 +99,4 @@
         </div>
     </div>
 </div> 
+

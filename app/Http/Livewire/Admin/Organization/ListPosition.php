@@ -34,6 +34,7 @@ class ListPosition extends Component
     public $cari;
     public $perPage = 25;
     protected $paginationTheme = 'bootstrap';
+    public $free = false;
     public $canShare = false;
     public $canReceive = false;
     protected $queryString = [
@@ -90,6 +91,9 @@ class ListPosition extends Component
         }
         if ($this->canReceive == true) {
             $this->positionModel->where('can_view_shared_note', 1);
+        }
+        if ($this->free == true) {
+            $this->positionModel->whereDoesntHave('users');
         }
 
 

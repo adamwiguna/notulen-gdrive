@@ -20,6 +20,6 @@ class SettingController extends Controller
 
         session()->flash('message' , 'Password berhasil diubah');
 
-        return redirect()->route('user.dashboard');
+        return redirect()->back();
     }
 }

@@ -23,6 +23,8 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard');
             }else if(auth()->user()->is_operator) {
                 return redirect()->route('operator.dashboard');
+            }else if(!auth()->user()->position_id || !auth()->user()->organization_id) {
+                return back()->with('loginError', 'Login Gagal!! </br> <div class=" text-small small"> Jabatan dan Instansi Anda Belum ter-Update</br> Silahkan Hubungi Admin/Operator </div>');
             }else {
                 return redirect()->route('user.dashboard');
             }

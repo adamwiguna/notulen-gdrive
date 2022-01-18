@@ -55,11 +55,13 @@
                                 </option>  
                             </optgroup>
                         @endforeach
+                        <optgroup  label="---------------------------------------------------">
+                        </optgroup>
                     </select>
                     <label for="floatingSelect">Pilih Jabatan</label>
                 </div>
-                {{ $divisionId }}
-                {{ $positionId }}
+                {{-- {{ $divisionId }}
+                {{ $positionId }} --}}
                 <div class="form-check form-switch">
                     <input wire:model="userIsPlt" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Status PLT</label>

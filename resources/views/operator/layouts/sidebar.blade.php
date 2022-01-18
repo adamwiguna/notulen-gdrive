@@ -42,7 +42,7 @@
         </h6>
         <hr class="my-0">
         <li class="nav-item">
-          <a class="nav-link  {{$sidebar == 'user' ? 'active' :''}}s" href="#">
+          <a class="nav-link  {{ $sidebar == 'password' ? 'active' :''}}" href="{{ route('operator.password') }}">
             <i class="bi bi-key-fill"></i>
             Ganti Password
           </a>

@@ -13,7 +13,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div  wire:loading.remove wire:target="getUser" class="modal-body">
-                {{ $userSlug }}
+                {{-- {{ $userSlug }} --}}
                 <div class="form-floating mb-3">
                     <input disabled wire:model="userNIP" type="text" class="form-control " id="floatingName" placeholder="name">
                     <label for="floatingName">N I P / Username</label>
@@ -41,8 +41,9 @@
                   {{-- {{ $positionId }} --}}
                 <div class="form-floating mb-3">
                     <select wire:model="positionId" wire:loading.remove wire:target="divisionId" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                      
+            
                             <option  value="0" selected hidden >Tanpa Jabatan</option>
+                
                         @foreach ($positions->sortBy('name') as $position)
                             <optgroup class="m-0" label="----------------------------------------------">
                                 <option value="{{ $position->id }}" {{ ($position->users->count() > 0 && $position->is_staff == 0) ?'disabled':'' }}>{!! $position->is_staff ? '(M)' : '' !!} {{ $position->name }}
@@ -52,11 +53,13 @@
                                 </option>  
                             </optgroup>
                         @endforeach
+                        <optgroup class="m-0" label="----------------------------------------------">
+                        </optgroup>
                     </select>
                     <label for="floatingSelect">Pilih Jabatan</label>
                 </div>
-                {{ $divisionId }}
-                {{ $positionId }}
+                {{-- {{ $divisionId }}
+                {{ $positionId }} --}}
                 <div class="form-check form-switch">
                     <input wire:model="userIsPlt" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Status PLT</label>
@@ -66,7 +69,7 @@
                     type="submit" 
                     class="btn btn-primary mt-3" 
                     data-bs-dismiss="modal" 
-                    {{-- {{ $disabled == true ? 'disabled' :'' }} --}}
+                    {{ $disabled == true ? 'disabled' :'' }}
                 >
                     <i class="bi bi-save"></i>
                     Simpan

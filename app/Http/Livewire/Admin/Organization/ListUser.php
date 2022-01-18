@@ -36,6 +36,7 @@ class ListUser extends Component
     public $userName;
     public $userSlug;
     public $userIsPlt = false;
+    public $newPassword;
 
 
     use WithPagination;
@@ -55,15 +56,27 @@ class ListUser extends Component
         'isNotHavePosition', 
         'isMutasi', 
         'perPage', 
+        'disabled', 
     ];
 
-    protected $rules = [
-        'userNIP' => 'required|max:100|unique:users,email',
-        'userPassword' => 'required|max:100',
-        'userName' => 'required|max:100',
-        'userSlug' => 'required|max:100|unique:users,slug',
-        'positionId' => 'nullable',
-    ];
+    // protected $rules = [
+    //     'userNIP' => 'required|max:100|unique:users,email',
+    //     'userPassword' => 'required|max:200',
+    //     'userName' => 'required|max:100',
+    //     'userSlug' => 'required|max:100|unique:users,slug',
+    //     'positionId' => 'nullable',
+    // ];
+
+    protected function rules()
+    {
+        return [
+            'userNIP' => 'required|max:100|unique:users,email,'.$this->userId,
+            'userPassword' => 'required|max:200',
+            'userName' => 'required|max:100',
+            'userSlug' => 'required|max:100|unique:users,slug,'.$this->userId,
+            'positionId' => 'nullable',
+        ];
+    }
 
     protected $messages = [
         'userNIP.required' => 'Tidak Boleh Kosong',
@@ -100,7 +113,7 @@ class ListUser extends Component
     public function render()
     {
         // dd($this->sidebar);
-        $this->userModel = User::where('id', '>', 0)->where('is_operator', false);
+        $this->userModel = User::where('id', '>', 0)->where('is_operator', false)->where('is_admin', false);
         if($this->organization instanceof Organization){
             $this->getOrganization = $this->organization;
             $this->organizationId = $this->organization->id;
@@ -111,22 +124,22 @@ class ListUser extends Component
                 $this->userModel->where('division_id', auth()->user()->division_id);
             }
         }
-        if ($this->sidebar == 'mutasi') {
-            $this->userModel = User::where('id', '>', 0)->where('is_operator', false)->where('is_admin', false);
-            $this->userModel->where('organization_id', null);
-        }
+        // if ($this->sidebar == 'mutasi') {
+        //     $this->userModel = User::where('id', '>', 0)->where('is_operator', false)->where('is_admin', false);
+        //     $this->userModel->where('organization_id', null);
+        // }
 
-        if ($this->isNotHavePosition == true) {
-            $this->userModel->where('position_id', null);
-        }
-
+        
         if ($this->isMutasi == true) {
             $this->userModel = User::where('id', '>', 0)->where('is_operator', false)->where('is_admin', false);
             $this->userModel->where('organization_id', null);
         }
-
+            
+        if ($this->isNotHavePosition == true) {
+            $this->userModel->where('position_id', null);
+        }
         if ($this->cari) {
-            $this->userModel = User::where('id', '>', 0)->where('is_operator', false)->where('is_admin', false)->where(function($query){
+            $this->userModel->where('id', '>', 0)->where('is_operator', false)->where('is_admin', false)->where(function($query){
                                 $query->where('name', 'like', '%'. $this->cari.'%')
                                         ->orWhere('email', 'like', '%'. $this->cari.'%');
                             });          
@@ -149,7 +162,7 @@ class ListUser extends Component
 
     public function createUser()
     {
-        
+        $this->disabled = true;
         $this->resetValidation();
         $this->userId = null;
         $this->userName =null;
@@ -191,13 +204,14 @@ class ListUser extends Component
 
     public function getUser(User $user)
     {
-        
+        $this->disabled = true;
         $this->resetValidation();
         $this->userId = $user->id;
         $this->userName = $user->name;
         $this->userNIP = $user->email;
-        $this->userPassword = null;
+        $this->userPassword = $user->password;
         $this->userIsPlt = $user->is_plt;
+        $this->userSlug = $user->slug;
 
         $this->positionId = $user->position_id;
         $this->positionName = $user->position->name??null;
@@ -218,12 +232,12 @@ class ListUser extends Component
 
     public function updateUser($userId)
     {
-        $this->validate([
-            'userPassword' => 'nullable|max:100',
-            'userName' => 'required|max:100',
-            'divisionId' => 'nullable',
-            'positionId' => 'nullable',
-        ]);
+        // $this->validate([
+        //     'userPassword' => 'nullable|max:100',
+        //     'userName' => 'required|max:100',
+        //     'divisionId' => 'nullable',
+        //     'positionId' => 'nullable',
+        // ]);
 
         $user = User::where('id', $userId);
         $user->update([
@@ -233,11 +247,14 @@ class ListUser extends Component
             'organization_id' =>  $this->organizationId,
             'is_plt' =>  $this->userIsPlt == null ? false : $this->userIsPlt,
         ]);
-        if ($this->userPassword !== null) {
+        if ($this->newPassword !== null) {
             $user->update([
-                'password' => bcrypt($this->userPassword),
+                // 'password' => bcrypt($this->newPassword),
+                'password' => ($this->newPassword),
             ]);
         }
+
+        $this->userPassword = null;
         
         session()->flash('message' , 'Data User '.$this->userName.' berhasil diubah');
     }

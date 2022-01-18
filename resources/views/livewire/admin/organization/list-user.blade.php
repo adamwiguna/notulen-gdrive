@@ -52,29 +52,45 @@
         </div>
     </div>
     {{ $users->links() }}
-    Total data : <span class="badge bg-success">{{ $users->total() }}</span>
+    Total data : 
+    <span class="badge bg-success">
+        <div wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, isNotHavePosition, isMutasi, perPage">
+            {{ $users->total() }}
+        </div>
+        <div wire:loading wire:target="cari, previousPage, nextPage, gotoPage, isNotHavePosition, isMutasi, perPage">
+            <div class=" text-center text-small small">
+                <div class="spinner-border spinner-border-sm small" role="status">
+                  <span class="visually-hidden small ">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </span>
     <div class="table-responsive">
         <table class="table table-responsive table-striped table-sm">
             <thead>
                 <tr>
                     <th scope="col" >NIP / Nama</th>
                     <th scope="col" >Jabatan</th>
-                    <th scope="col" >Dibagikan</th>
-                    <th scope="col" >Diterima</th>
+                    <th scope="col" >Notulen Dibuat</th>
+                    {{-- <th scope="col" >Diterima</th> --}}
                     <th scope="col" class="col-2" ></th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($users as $user)
-                    <tr wire:loading.remove wire:target="cari">
-                        <td>{{ $user->email }} | {{ $user->id }} | {{ $user->name }}</td>
+                    <tr wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, isNotHavePosition, isMutasi, perPage">
+                        <td>
+                            {{ $user->email }} <br>
+                            {{ $user->id }} | {{ $user->name }}
+                        </td>
                         <td>{{ $user->position_id }} {{ $user->is_plt ? '(PLT) ' : '' }}{{ $user->position ? $user->position->name : '-' }} </td>
                         <td>
-                            @foreach ($user->asSender as $noteDistribution)
+                            {{ $user->notes->count() }}
+                            {{-- @foreach ($user->asSender as $noteDistribution)
                                 - {{ $noteDistribution->note->id }} | {{ $noteDistribution->note->title }} {{ $noteDistribution->note->user_id == $user->id ? '(Penulis)' : '' }} <br>
-                            @endforeach
+                            @endforeach --}}
                         </td>
-                        <td>
+                        {{-- <td>
                             @if ($user->position)
                                 @foreach ($noteDistributions->filter(function ($note) use ($user) {  return   $user->position->is_staff ?  $note->receiver_user_id == $user->id  : $note->receiver_user_id == $user->id || $note->receiver_position_id == $user->position_id ; })->unique('note_id') as $noteDistribution)
                                 - {{ $noteDistribution->note->id }} <br>
@@ -84,7 +100,7 @@
                                 - {{ $noteDistribution->note->id }} <br>
                                 @endforeach
                             @endif
-                        </td>
+                        </td> --}}
                         <td>
                             @if ($user->organization_id == $organizationId)
                                 @if ($user->position_id == null)
@@ -127,7 +143,7 @@
                 @endforelse
             </tbody>
         </table>
-        <div wire:loading.inline wire:target="cari, previousPage, nextPage, gotoPage">
+        <div wire:loading.inline wire:target="cari, previousPage, nextPage, gotoPage, isNotHavePosition, isMutasi, perPage">
             <div class=" text-center ">
                 <div class="spinner-border" role="status">
                   <span class="visually-hidden">Loading...</span>
