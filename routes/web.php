@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\User\Note\Notes;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\OrganizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['is_admin'])->prefix('admin')->name('admin.')->group(function () {
         
-        Route::get('dashboard', [App\http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-        Route::resource('organization', App\http\Controllers\Admin\OrganizationController::class);
-        Route::resource('user', App\http\Controllers\Admin\UserController::class);
+        Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('organization', App\Http\Controllers\Admin\OrganizationController::class);
+        Route::resource('user', App\Http\Controllers\Admin\UserController::class);
         Route::get('position',function () {
             return view('admin.position.index', ['sidebar' => 'position']);
         })->name('position.index');
@@ -47,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['is_operator'])->prefix('operator')->name('operator.')->group(function () {
-        Route::get('dashboard', [App\http\Controllers\Operator\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('dashboard', [App\Http\Controllers\Operator\DashboardController::class, 'index'])->name('dashboard');
         // Route::get('division',function () {
         //     return view('operator.division.index', ['sidebar' => 'division']);
         // })->name('division.index');
@@ -68,25 +65,25 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('user')->name('user.')->group(function () {
-        Route::get('home', [App\http\Controllers\User\DashboardController::class, 'index'])->name('dashboard');
-        // Route::get('password', [App\http\Controllers\User\DashboardController::class, 'index'])->name('password');
-        Route::post('password', [App\http\Controllers\User\SettingController::class, 'updatePassword'])->name('password.update');
+        Route::get('home', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('dashboard');
+        // Route::get('password', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('password');
+        Route::post('password', [App\Http\Controllers\User\SettingController::class, 'updatePassword'])->name('password.update');
         Route::get('password',function () {
             return view('user.setting.change-password');
         })->name('password');
-        Route::get('setting', [App\http\Controllers\User\DashboardController::class, 'index'])->name('setting');
+        Route::get('setting', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('setting');
 
         // Route::get('notes', App\Http\Livewire\User\Note\Notes::class);
         
-        Route::resource('note', App\http\Controllers\User\NoteController::class);
-        Route::get('export/note/{note}', [App\http\Controllers\User\NoteController::class, 'export2'])->name('export.note');
-        Route::get('share/note/{note}', [App\http\Controllers\User\NoteController::class, 'share'])->name('share.note');
+        Route::resource('note', App\Http\Controllers\User\NoteController::class);
+        Route::get('export/note/{note}', [App\Http\Controllers\User\NoteController::class, 'export2'])->name('export.note');
+        Route::get('share/note/{note}', [App\Http\Controllers\User\NoteController::class, 'share'])->name('share.note');
 
-        Route::get('attendance/{note}/create', [App\http\Controllers\User\AttendanceController::class, 'create'])->name('attendance.create');
+        Route::get('attendance/{note}/create', [App\Http\Controllers\User\AttendanceController::class, 'create'])->name('attendance.create');
        
-        Route::get('photo/{note}/create', [App\http\Controllers\User\PhotoController::class, 'create'])->name('photo.create');
-        Route::post('photo/{note}/store', [App\http\Controllers\User\PhotoController::class, 'store'])->name('photo.store');
-        Route::delete('photo/{note}/{photo}', [App\http\Controllers\User\PhotoController::class, 'destroy'])->name('photo.destroy');
+        Route::get('photo/{note}/create', [App\Http\Controllers\User\PhotoController::class, 'create'])->name('photo.create');
+        Route::post('photo/{note}/store', [App\Http\Controllers\User\PhotoController::class, 'store'])->name('photo.store');
+        Route::delete('photo/{note}/{photo}', [App\Http\Controllers\User\PhotoController::class, 'destroy'])->name('photo.destroy');
     });
 
     

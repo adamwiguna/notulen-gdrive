@@ -1,4 +1,5 @@
 <div>
+    @can('manage-this-note', $note)
     <div wire:ignore.self class="input-group input-group-sm small mb-3">
         <input wire:model.defer="attendanceName" type="text" aria-label="First name" class="form-control form-control-sm" placeholder="Nama">
         <input wire:model.defer="attendancePosition" type="text" aria-label="Last name" class="form-control form-control-sm" placeholder="Jabatan">
@@ -7,6 +8,7 @@
             <i class="bi bi-plus-square"></i>
         </button>
     </div>
+    @endcan
     @if (session()->has('message-attendance'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('message-attendance') }} 

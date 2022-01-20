@@ -267,6 +267,7 @@
             </div>
             <div class="modal-body">
                 {{-- @livewire('user.note.list-attendance', ['note' => $note]) --}}
+                @can('manage-this-note', $note)
                 <div wire:ignore.self class="input-group input-group-sm small mb-3">
                     <input wire:model.defer="attendanceName" type="text" aria-label="First name" class="form-control form-control-sm" placeholder="Nama">
                     <input wire:model.defer="attendancePosition" type="text" aria-label="Last name" class="form-control form-control-sm" placeholder="Jabatan">
@@ -275,6 +276,7 @@
                         <i class="bi bi-plus-square"></i>
                     </button>
                 </div>
+                @endcan
                 @if (session()->has('message-attendance'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('message-attendance') }} 
@@ -288,7 +290,9 @@
                             <th scope="col">Nama</th>
                             <th scope="col">Jabatan</th>
                             <th scope="col">Instansi</th>
+                            @can('manage-this-note', $note)
                             <th scope="col"></th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -298,11 +302,13 @@
                                 <td>{{ $attendance->name }}</td>
                                 <td>{{ $attendance->position }}</td>
                                 <td>{{ $attendance->organization }}</td>
+                                @can('manage-this-note', $note)
                                 <td>
                                     <button class="btn btn-danger btn-sm small py-0 px-1" data-bs-toggle="modal" data-bs-target="#exampleModalDelete{{ $attendance->id }}">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>
+                                @endcan
                             </tr>
                             <!-- Modal Delete Note -->
                             <div class="modal fade " id="exampleModalDelete{{ $attendance->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
