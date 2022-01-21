@@ -249,8 +249,8 @@ class ListUser extends Component
         ]);
         if ($this->newPassword !== null) {
             $user->update([
-                // 'password' => bcrypt($this->newPassword),
-                'password' => ($this->newPassword),
+                'password' => bcrypt($this->newPassword),
+                // 'password' => ($this->newPassword),
             ]);
         }
 
