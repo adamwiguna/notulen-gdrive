@@ -69,7 +69,7 @@
                         <td>{{ $position->name }}</td>
                         <td>
                             @forelse ($position->users as $user)
-                                {{ $user->name }} <br>
+                                {{ $user->email }} - {{ $user->name }} <br>
                             @empty
                                 -
                             @endforelse
