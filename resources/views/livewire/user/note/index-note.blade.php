@@ -104,24 +104,28 @@
         <div class="card-header bg-white small justify-content-between d-flex flex py-1 px-2 ">
             <small>
                 <h5 class="card-title mb-1">
-                    {{ $note->id }}{{ $note->title }}
+                    {{-- {{ $note->id }} --}}
+                    {{ $note->title }}
                     @if ( $note->noteDistributions->where('is_read', 0)->where('receiver_position_id', auth()->user()->position_id)->count() > 0)
                         <span class="badge bg-danger">Baru</span>   
                     @endif
                 </h5>
-                <h5 class="card-title mb-1">
-                    {{ $note->user_id }}{{ $note->user->name }}
-                </h5>
+                {{-- <h5 class="card-title mb-1">
+                    {{ $note->user_id }}
+                    {{ $note->user->name }}
+                </h5> --}}
                 <div>
-                    {{-- @foreach ($note->noteDistributions->where('receiver_position_id', auth()->user()->position->id) as $noteDistribution)
+                    @foreach ($note->noteDistributions->where('receiver_position_id', auth()->user()->position->id) as $noteDistribution)
                         <i class="bi bi-share-fill"></i> {{ $noteDistribution->positionSender->users[0]->name}} 
-                    @endforeach --}}
+                    @endforeach
                 </div>
+                @can('manage-this-note', $note)
                 <div>
                     @foreach ($note->noteDistributions as $noteDistribution)
                         <i class="bi bi-person-check"></i> {{ $noteDistribution->positionReceiver->users[0]->name ?? ''}} |
                     @endforeach
                 </div>
+                @endcan
             </small>
             <div class="dropdown mx-1">
               
@@ -164,7 +168,7 @@
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }} bg-secondary" style="aspect-ratio: 16/9; overflow:hidden;     ">
                             {{-- <a href="{{ $photo->url }}"> --}}
                             <a data-bs-toggle="modal" data-bs-target="#exampleModal{{ $photo->id }}">
-                                <img src="{{ $photo->url }}" class="d-block w-100 shadow" alt="" style=" object-fit:  contain;  height:100%; object-position: center;">
+                                <img src="{{ $photo->url }}" class="d-block w-100 shadow" alt="" style=" object-fit:  cover;  height:100%; object-position: center;">
                             </a>
                         </div>
                         
@@ -196,7 +200,7 @@
                         <img src="https://via.placeholder.com/1600x900?text=Foto+Tidak+Ditemukan" class="d-block w-100" alt="" style=" object-fit:  contain;  height:100%; object-position: center;">
                     </div>
                 @endif
-        <div class="card-body small py-1 px-2">
+        <div class="card-body small py-1 px-2 mb-2">
             
             {{ $note->description??'' }} <br>
             <small>
