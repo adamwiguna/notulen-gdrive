@@ -27,7 +27,7 @@ class PhotoController extends Controller
         $ext = strtolower($request->photo->getClientOriginalExtension());
         $image_name = Str::random(50).'_'.time();
         $image_full_name = $image_name.'.'.$ext;
-        $upload_path = 'photos/'.$note->id.'/';
+        $upload_path = 'public/photos/'.$note->id.'/';
         $image_url = '/'.$upload_path.$image_full_name;
         $request->photo->move($upload_path, $image_full_name);
         
