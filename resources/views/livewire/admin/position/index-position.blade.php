@@ -67,12 +67,30 @@
                 @forelse ($positions as $position)
                     <tr wire:loading.remove wire:target="isOperator, isNotInOrganization, isNotHavePosition, cari, previousPage, nextPage, gotoPage">
                         <td>{{ $position->name }}</td>
-                        <td>
-                            @forelse ($position->users as $user)
-                                {{ $user->email }} - {{ $user->name }} <br>
-                            @empty
-                                -
-                            @endforelse
+                        <td class=" justify-content-between">
+                            @if ($position->users->count() == 0)
+                                    -
+                            @else
+                                @if ($position->is_staff == true)
+                                <div>
+                                    {{ $position->users[0]->email }} - {{ $position->users[0]->name }}<hr class="p-0 m-0">
+                                    <div class="collapse" id="collapseExample">
+                                        @foreach ($position->users->skip(1) as $user)    
+                                        {{ $user->email }} - {{ $user->is_plt ? '(PLT) ' : '' }} {{ $user->name }}   <br>    <hr class="p-0 m-0">                         
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary btn-sm py-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                        <i class="bi bi-search"></i> Semua
+                                    </button> <br>
+                                </div>
+                                @else
+                                    @foreach ($position->users as $user)    
+                                    {{ $user->email }} - {{ $user->is_plt ? '(PLT) ' : '' }} {{ $user->name }}   <br>                             
+                                    @endforeach
+                                @endif
+                            @endif
                         </td>
                         <td>{{ $position->alias }}</td>
                         <td>{{ $position->organization->name ?? '-' }}</td>
