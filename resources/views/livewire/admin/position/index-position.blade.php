@@ -55,7 +55,7 @@
                     <th scope="col" class="col-">Pemegang Jabatan Saat Ini</th>
                     <th scope="col">Alias</th>
                     <th scope="col" class="col-">SKPD</th>
-                    <th scope="col" class="col-">Bidang/Bagian</th>
+                    {{-- <th scope="col" class="col-">Bidang/Bagian</th> --}}
                     <th scope="col" class="col-2"></th>
                 </tr>
             </thead>
@@ -72,7 +72,7 @@
                         </td>
                         <td>{{ $position->alias }}</td>
                         <td>{{ $position->organization->name ?? '-' }}</td>
-                        <td>{{ $position->division->name ?? '-' }}</td>
+                        {{-- <td>{{ $position->division->name ?? '-' }}</td> --}}
                         <td>
                             <a wire:click="getPositionMaster({{ $position }})" class="btn btn-sm mb-1  btn-warning text-white"  data-bs-toggle="modal" data-bs-target="#editPositionMasterModal">
                                 <i class="bi bi-pencil-square"></i>

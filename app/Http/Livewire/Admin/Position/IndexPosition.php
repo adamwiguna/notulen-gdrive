@@ -70,7 +70,7 @@ class IndexPosition extends Component
         return view('livewire.admin.position.index-position', [
             'positions' => $positionModel->with(['users'])->paginate($this->perPage),
             'organizations' => Organization::orderBy('name', 'asc')->get(),
-            'divisions' => Division::orderBy('name', 'asc')->get(),
+            // 'divisions' => Division::orderBy('name', 'asc')->get(),
             'users' => User::orderBy('name', 'asc')->get(),
         ]);
     }
