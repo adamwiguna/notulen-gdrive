@@ -80,10 +80,16 @@
                 @forelse ($users as $user)
                     <tr wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, isNotHavePosition, isMutasi, perPage">
                         <td>
-                            {{ $user->email }} <br>
-                            {{ $user->id }} | {{ $user->name }}
+                            <div class=" fs-bold">
+                                {{ $user->email }} <br>
+                            </div>
+                            {{-- {{ $user->id }} |  --}}
+                            {{ $user->name }}
                         </td>
-                        <td>{{ $user->position_id }} {{ $user->is_plt ? '(PLT) ' : '' }}{{ $user->position ? $user->position->name : '-' }} </td>
+                        <td>
+                            {{-- {{ $user->position_id }} --}}
+                             {{ $user->is_plt ? '(PLT) ' : '' }}{{ $user->position ? $user->position->name : '-' }} 
+                        </td>
                         <td>
                             {{ $user->notes->count() }}
                             {{-- @foreach ($user->asSender as $noteDistribution)

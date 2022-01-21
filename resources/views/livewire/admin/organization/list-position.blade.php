@@ -86,7 +86,7 @@
                 @forelse ($positions as $position)
                     <tr wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, canShare, canReceive, free, perPage">
                         <td>
-                            {{ $position->id }} |
+                            {{-- {{ $position->id }} | --}}
                             {{ $position->name }} {!! $position->is_staff ? '<i class="bi bi-people-fill"></i>' : '' !!}
                         </td> 
                         <td>{{ $position->alias }} {!! $position->is_staff ? '<i class="bi bi-people-fill"></i>' : '' !!}</td>
