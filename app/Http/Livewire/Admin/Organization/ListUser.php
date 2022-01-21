@@ -149,7 +149,7 @@ class ListUser extends Component
         $this->positionModel->where('division_id', $this->divisionId == 0 ? null : $this->divisionId);
 
         return view('livewire.admin.organization.list-user', [
-            'users' => $this->userModel->with(['division', 'position'])->latest()->paginate($this->perPage),
+            'users' => $this->userModel->with(['division', 'position', 'notes'])->latest()->paginate($this->perPage),
             'positions' => $this->positionModel->get(),
             'noteDistributions' => NoteDistribution::latest()->get(),
         ]);

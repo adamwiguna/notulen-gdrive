@@ -93,14 +93,27 @@
                         <td>
                             {{ $position->asReceiver->count() }}
                         </td>
-                        <td>
+                        <td class="justify-content-between">
                             <div class=" fst-italic"> 
                                 @if ($position->users->count() == 0)
                                      -
+                                @else
+                                    @if ($position->is_staff == true)
+                                        {{ $position->users[0]->name }} 
+                                        <button class="btn btn-primary btn-sm py-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            <i class="bi bi-search"></i> Semua
+                                        </button>
+                                        <div class="collapse" id="collapseExample">
+                                            @foreach ($position->users->skip(1) as $user)    
+                                            {{ $user->is_plt ? '(PLT) ' : '' }} {{ $user->name }}   <br>                             
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        @foreach ($position->users as $user)    
+                                        {{ $user->is_plt ? '(PLT) ' : '' }} {{ $user->name }}   <br>                             
+                                        @endforeach
+                                    @endif
                                 @endif
-                                @foreach ($position->users as $user)    
-                                   {{ $user->is_plt ? '(PLT) ' : '' }} {{ $user->name }}   <br>                             
-                                @endforeach
                             </div> 
                         </td>
                        
