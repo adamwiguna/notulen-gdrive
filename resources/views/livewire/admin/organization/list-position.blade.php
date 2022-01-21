@@ -93,7 +93,7 @@
                         <td>
                             {{ $position->asReceiver->count() }}
                         </td>
-                        <td class="justify-content-between">
+                        <td class="justify-content-between ">
                             <div class=" fst-italic"> 
                                 @if ($position->users->count() == 0)
                                      -
