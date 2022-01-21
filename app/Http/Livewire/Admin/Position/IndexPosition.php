@@ -21,6 +21,7 @@ class IndexPosition extends Component
         'cari',
         'canShare',
         'canReceive',
+        'free',
     ];
 
     public $username;
@@ -41,6 +42,7 @@ class IndexPosition extends Component
 
     public $canShare = false;
     public $canReceive = false;
+    public $free = false;
 
     
     public function render()
@@ -65,6 +67,9 @@ class IndexPosition extends Component
         }
         if ($this->canReceive == true) {
             $positionModel->where('can_view_shared_note', 1);
+        }
+        if ($this->free == true) {
+            $positionModel->whereDoesntHave('users');
         }
 
         return view('livewire.admin.position.index-position', [

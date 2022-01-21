@@ -33,6 +33,10 @@
         {{-- {{ $noteCreator }} --}}
         
         {{-- <input wire:model="noteCreator" class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  > Sendiri --}}
+        <input wire:model="free" class="btn-check" type="checkbox" id="flexCheckDefault" onclick="this.blur();"  value="" >
+        <label class="btn btn-outline-success " for="flexCheckDefault" onclick="this.blur();">
+            Tanpa User
+        </label> 
         <input wire:model="canShare" class="btn-check" type="checkbox" id="flexCheckDefault" onclick="this.blur();"  value="" >
         <label class="btn btn-outline-success " for="flexCheckDefault" onclick="this.blur();">
             Mengirim Keluar
