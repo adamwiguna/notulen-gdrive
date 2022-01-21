@@ -15,17 +15,39 @@
                 <input wire:model="settings" class="btn-check mt-3" type="checkbox" id="flexCheckDefault0" onclick="this.blur();"  value="" >
                 <label class="btn small btn-sm btn-secondary {{ $settings == true ? '' : 'bg-transparent text-dark' }} mt-3" for="flexCheckDefault0" onclick="this.blur();">
                     <small>
-                        @if ($settings == true)
+                        <div wire:loading.inline wire:target="settings">
+                            <div class="spinner-grow spinner-grow-sm"  role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm"  role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm"  role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm"  role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm"  role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div class="spinner-grow spinner-grow-sm"  role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                        <div wire:loading.remove wire:target="settings">
+                            @if ($settings == true)
                             <i class="bi bi-chevron-down"></i> 
-                        @else    
+                            @else    
                             <i class="bi bi-chevron-up"></i> 
-                        @endif 
-                        Setting Pencarian  <i class="bi bi-gear-fill"></i> 
+                            @endif 
+                            Setting Pencarian  <i class="bi bi-gear-fill"></i> 
+                        </div>
                     </small>
                 </label> 
             </div>
 
-            <div class="mt-3 lh-base collapse {{ $settings == true ? 'show' : '' }}" id="collapseExample">
+            <div class="mt-3 text-small small lh-base collapse {{ $settings == true ? 'show' : '' }}" id="collapseExample">
              
                     Per Halaman : 
                     <select wire:model="perPage" name="" id="" class="form-control-sm w-auto sm">
@@ -33,7 +55,7 @@
                         <option value="25">25</option>
                         <option value="50">50</option>
                     </select>
-                <input wire:model="cari" type="text" class="form-control mb-2 mt-2" placeholder="Cari notulen">  
+                <input wire:model="cari" type="text" class="form-control mb-2 mt-2 form-control-sm" placeholder="Cari notulen">  
                 {{-- {{ $cari }} --}}
                 <div>
                 Filter Notulen:   
@@ -41,20 +63,20 @@
                 {{-- {{ $noteCreator }} --}}
                 
                 {{-- <input wire:model="noteCreator" class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  > Sendiri --}}
-                <input wire:model="noteCreator" class="btn-check" type="checkbox" id="flexCheckDefault" onclick="this.blur();"  value="" >
-                <label class="btn btn-outline-success " for="flexCheckDefault" onclick="this.blur();">
+                <input wire:model="noteCreator" class="btn-check btn-sm" type="checkbox" id="flexCheckDefault" onclick="this.blur();"  value="" >
+                <label class="btn btn-outline-success btn-sm " for="flexCheckDefault" onclick="this.blur();">
                     Saya
                 </label> 
                 <input wire:model="noteNew" class="btn-check" type="checkbox" id="flexCheckDefault3" onclick="this.blur();"  value="" >
-                <label class="btn btn-outline-success" for="flexCheckDefault3" onclick="this.blur();">
+                <label class="btn btn-outline-success btn-sm" for="flexCheckDefault3" onclick="this.blur();">
                     Baru
                 </label> 
                 <input wire:model="noteReceived" class="btn-check" type="checkbox" id="flexCheckDefault1" onclick="this.blur();" >
-                <label class="btn btn-outline-success" for="flexCheckDefault1" onclick="this.blur();">
+                <label class="btn btn-outline-success btn-sm" for="flexCheckDefault1" onclick="this.blur();">
                     Diterima
                 </label>
                 <input wire:model="noteSent" class="btn-check" type="checkbox" id="flexCheckDefault2" onclick="this.blur();" >
-                <label class="btn btn-outline-success" for="flexCheckDefault2" onclick="this.blur();">
+                <label class="btn btn-outline-success btn-sm" for="flexCheckDefault2" onclick="this.blur();">
                     Dikirim
                 </label>
             </div>
@@ -114,11 +136,13 @@
                     {{ $note->user_id }}
                     {{ $note->user->name }}
                 </h5> --}}
+                @if (auth()->user()->position_id !== null)
                 <div>
                     @foreach ($note->noteDistributions->where('receiver_position_id', auth()->user()->position->id) as $noteDistribution)
                         <i class="bi bi-share-fill"></i> {{ $noteDistribution->positionSender->users[0]->name}} 
                     @endforeach
                 </div>
+                @endif
                 @can('manage-this-note', $note)
                 <div>
                     @foreach ($note->noteDistributions as $noteDistribution)
