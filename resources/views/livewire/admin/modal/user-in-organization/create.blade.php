@@ -32,6 +32,7 @@
                       </span>
                     @enderror
                 </div>
+                {{ $userPassword }}
                 <div class="form-floating mb-3">
                     <input wire:model="userName" type="text" class="form-control  @error('userName') is-invalid @enderror" id="floatingName" placeholder="name">
                     <label for="floatingName">Nama</label>
