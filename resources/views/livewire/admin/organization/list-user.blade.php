@@ -80,7 +80,7 @@
                 @forelse ($users as $user)
                     <tr wire:loading.remove wire:target="cari, previousPage, nextPage, gotoPage, isNotHavePosition, isMutasi, perPage">
                         <td>
-                            <div class=" fs-bold">
+                            <div class=" fw-bold">
                                 {{ $user->email }} <br>
                             </div>
                             {{-- {{ $user->id }} |  --}}
