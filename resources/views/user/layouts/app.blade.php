@@ -129,11 +129,11 @@
 {{-- <script src="/js/bootstrap.bundle.min.js"></script> --}}
 <script src="/js/offcanvas.js"></script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
   $(document).ready(function() {
     $('#js-example-basic-single').select2();
   });
-</script>
+</script> --}}
 <script type="text/javascript" src="/js/trix.js"></script>
 @livewireScripts
   </body>
