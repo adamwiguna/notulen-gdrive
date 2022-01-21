@@ -68,7 +68,7 @@ class OrganizationController extends Controller
         $user->slug = $request->slug;
         $user->email = $request->username;
         $user->name = $request->username;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->is_operator = true;
         $user->organization_id = $organization->id;
         $user->save();
