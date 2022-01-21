@@ -45,7 +45,7 @@ class DashboardController extends Controller
         })->take(-6);
        
 
-         dd($notes);
+        //  dd($notes);
 
 //    dd($notes->toArray());
      foreach ($organizations as $organization) {
@@ -57,7 +57,7 @@ class DashboardController extends Controller
             return $a;
         })->map->count();
        
-        dd($or->keys());
+        // dd($or->keys());
         
     }
 
