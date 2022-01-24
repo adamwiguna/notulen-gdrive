@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use DOMDocument;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,6 +42,7 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->body);
         $request->validate([
             'slug' => "required|max:254|unique:notes,slug",
             'title' => "required|max:254",
@@ -256,8 +258,15 @@ class NoteController extends Controller
 
         $section->addLine(['weight' => 1, 'width' => 450, 'height' => 0]);
         $section->addText('Pembahasan:');
-        $html = $note->content;
+        $value = $note->content;
+        $value = str_replace("<br><br>","<br/>",$value);
+        $value = str_replace("<br>","</div><div>",$value);
+        $html = $value;
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html, false, false);
+        // $doc = new DOMDocument();
+        // $doc->loadHTML($note->content);
+        // $doc->saveXML();
+        // \PhpOffice\PhpWord\Shared\Html::addHtml($section, $doc->saveXml(), true);
 
         $section->addPageBreak();
 

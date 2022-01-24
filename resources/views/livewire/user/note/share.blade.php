@@ -119,7 +119,7 @@
                         @else
                             Sudah Dikirim oleh <br>
                             {{ $note->noteDistributions->where('receiver_position_id', $position->id)->first()->positionSender->name}} <br>
-                            {{ $note->noteDistributions->where('receiver_position_id', $position->id)->first()->positionSender->users->first()->name}} <br>
+                            {{ $note->noteDistributions->where('receiver_position_id', $position->id)->first()->positionSender->users->first()->name ?? ''}} <br>
                             {{-- {{ $note->noteDistributions->positionSender->users[0]->name }} --}}
                             {{-- {{ $note->noteDistributions[0]->positionSender->name }} <br>
                             {{ $note->noteDistributions[0]->positionSender->users[0]->name }} --}}
@@ -142,7 +142,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">{{ $note->title }}</h5>
                         </div>
-                        <div class="modal-body">Kirim ke {{ $position->name }}, {{ $position->users[0]->name }}</div>
+                        <div class="modal-body">Kirim ke {{ $position->name }}, {{ $position->users[0]->name ?? '-' }}</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
                             <button wire:click="shareTo({{ $note->id }}, {{ $position->id }})" class="btn btn-primary text-white" data-bs-dismiss="modal"><i class="bi bi-send"> </i> Kirim</button>

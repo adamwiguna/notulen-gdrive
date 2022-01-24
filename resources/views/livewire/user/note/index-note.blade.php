@@ -139,14 +139,14 @@
                 @if (auth()->user()->position_id !== null)
                 <div>
                     @foreach ($note->noteDistributions->where('receiver_position_id', auth()->user()->position->id) as $noteDistribution)
-                        <i class="bi bi-share-fill"></i> {{ $noteDistribution->positionSender->users[0]->name}} 
+                        <i class="bi bi-share-fill"></i> {{ $noteDistribution->positionSender->name}} 
                     @endforeach
                 </div>
                 @endif
                 @can('manage-this-note', $note)
                 <div>
                     @foreach ($note->noteDistributions as $noteDistribution)
-                        <i class="bi bi-person-check"></i> {{ $noteDistribution->positionReceiver->users[0]->name ?? ''}} |
+                        <i class="bi bi-person-check"></i> {{ $noteDistribution->positionReceiver->name ?? ''}} |
                     @endforeach
                 </div>
                 @endcan
@@ -261,7 +261,7 @@
                         </tr>
                         <tr>
                             <td><i class="bi bi-pen-fill"></i></td>
-                            <td> {{ $note->user->name}}</td>
+                            <td> {{ $note->user->name ?? 'anonim' }}</td>
                         </tr>
                         <tr>
                             <td> <i class="bi bi-people-fill"></td>
