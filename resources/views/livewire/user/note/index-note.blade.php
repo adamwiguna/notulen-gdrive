@@ -139,7 +139,7 @@
                 @if (auth()->user()->position_id !== null)
                 <div>
                     @foreach ($note->noteDistributions->where('receiver_position_id', auth()->user()->position->id) as $noteDistribution)
-                        <i class="bi bi-share-fill"></i> {{ $noteDistribution->positionSender->name}} 
+                        <i class="bi bi-share-fill"></i> {{ $noteDistribution->positionSender->name?? '-'}} 
                     @endforeach
                 </div>
                 @endif
