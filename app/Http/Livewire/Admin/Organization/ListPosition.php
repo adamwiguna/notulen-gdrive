@@ -42,6 +42,7 @@ class ListPosition extends Component
         'canShare', 
         'canReceive', 
         'perPage', 
+        'free',
     ];
 
     private $positionModel;

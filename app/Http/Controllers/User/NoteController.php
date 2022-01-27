@@ -168,7 +168,7 @@ class NoteController extends Controller
     public function share(Note $note)
     {
         // dd($note);
-        if (auth()->user()->position->can_share_note) {
+        if (auth()->user()->is_admin || auth()->user()->position->can_share_note ) {
             $users = User::where('is_admin', false)
                             ->where('is_operator', false)
                             ->where('organization_id', auth()->user()->organization_id)

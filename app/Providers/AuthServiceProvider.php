@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('manage-this-note', function (User $user, Note $note) {
-            return $user->id === $note->user_id;
+            return $user->id === $note->user_id || auth()->user()->is_admin;
         });
 
         //

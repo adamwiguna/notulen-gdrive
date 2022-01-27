@@ -57,6 +57,7 @@ class ListUser extends Component
         'isMutasi', 
         'perPage', 
         'disabled', 
+        // 'free',
     ];
 
     // protected $rules = [

@@ -18,15 +18,23 @@ class Share extends Component
     {
        
 
-        $positions = Position::where('organization_id', auth()->user()->organization_id)
+        $positions = Position::
+                                // where('organization_id', auth()->user()->organization_id)
+                                where(function($query){
+                                    if (auth()->user()->is_admin) {
+                                        $query->latest();
+                                    } else {
+                                        $query->where('organization_id', auth()->user()->organization_id);
+                                    }
+                                })
                                 // ->whereHas('notes', function ($query) {
                                 //     $query->where('id', '!=', $this->note->id);
                                 // })
                                 ->where('id', '<>',$this->note->position_id)
                                 ->where('is_staff', 0);
 
-        if (auth()->user()->position->can_share_note === 1) {
-            $positionsOutsideOrganization = Position::where('organization_id', '<>', auth()->user()->position->organization_id)
+        if (auth()->user()->is_admin || auth()->user()->position->can_share_note === 1) {
+            $positionsOutsideOrganization = Position::where('organization_id', '<>', auth()->user()->is_admin? '0' : auth()->user()->position->organization_id)
                                             ->where('can_view_shared_note', 1);
             if ($this->cari) {
             $positionsOutsideOrganization->where(function ($query) {
@@ -78,6 +86,7 @@ class Share extends Component
 
     public function unShareTo($note_id, $position_id)
     {
+        // dd($note_id, $position_id);
         $data = NoteDistribution::where('note_id', $note_id)->where('receiver_position_id', $position_id);
         if ($data->count() > 0) {
             $data->delete();
