@@ -20,15 +20,16 @@ class OrganizationSeeder extends Seeder
         $faker = Faker::create();
 
 
-        $date = new DateTime('2020-01-01');
+        // $date = new DateTime('2020-01-01');
+        $date = now();
 
         $n = 1;
         // $n = date('Y-m-d', strtotime( $d . " +1 days"));
 
-        for ($i = 1; $i <= 50; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $organizationName = $faker->company();
             if(preg_match_all('/\b(\w)/',strtoupper($organizationName),$m)) {
-                $alias = implode('',$m[1]); // membuat Akronime dari $organizationName
+                $alias = implode('',$m[1]); // membuat Akronim dari $organizationName
             }
 
             $organization = Organization::create([
@@ -100,7 +101,7 @@ class OrganizationSeeder extends Seeder
                         'updated_at' => $date,
                     ]);
 
-                    $count = mt_rand(15, 50);
+                    $count = mt_rand(15, 200);
 
                     for ($k = 1; $k <= $count; $k++) {
 
@@ -117,13 +118,14 @@ class OrganizationSeeder extends Seeder
                             'position_id' => $position->id,
                             'organizer' => $faker->name(),
                             'content' => $faker->paragraph($contentLength),
-                            'created_at' => $date,
+                            'created_at' =>  $faker->dateTimeBetween('-1 year', '+1 day'),
+                            // 'created_at' => $date,
                             'updated_at' => $date,
                         ]);
 
                         
 
-                        for ($l=1; $l <= $count; $l++) { 
+                        for ($l=1; $l <= 3; $l++) { 
                             $photo = $note->photos()->create([
                                 'note_id' => $note->id,
                                 'url' => $faker->imageUrl(640, 480, 'animals', true),
@@ -132,7 +134,7 @@ class OrganizationSeeder extends Seeder
                             ]);
                         }
                        
-                        for ($l=1; $l <= $count; $l++) { 
+                        for ($l=1; $l <= 3; $l++) { 
                             $photo = $note->attendances()->create([
                                 'note_id' => $note->id,
                                 'name' => $faker->name(),
@@ -143,9 +145,9 @@ class OrganizationSeeder extends Seeder
                             ]);
                         }
 
-                        $date->modify('+1 day');
-
+                        
                     }
+                    $date->modify('-1 day');
 
 
                 }

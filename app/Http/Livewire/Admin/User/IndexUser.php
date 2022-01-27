@@ -17,7 +17,13 @@ class IndexUser extends Component
     public $cari;
     public $perPage = 10;
     protected $paginationTheme = 'bootstrap';
-    protected $queryString = ['cari'];
+    protected $queryString = [
+        'cari',
+        'isOperator',
+        'isNotInOrganization',
+        'isNotHavePosition',
+        'isNotHavePositionButHaveOrganization',
+    ];
 
     public $isOperator = false;
     public $isNotInOrganization = false;

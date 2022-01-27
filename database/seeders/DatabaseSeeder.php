@@ -28,6 +28,6 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'is_admin' => true,
         ]);
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(20)->create();
     }
 }
