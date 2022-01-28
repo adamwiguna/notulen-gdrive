@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 
-use consoletvs\charts\Registrar as Charts;
+// use consoletvs\charts\Registrar as Charts;
 use App\Charts\SampleChart;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,13 +24,17 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Charts $charts)
+    // public function boot(Charts $charts)
+    // {
+    //     $charts->register([
+    //         \App\Charts\SampleChart::class,
+    //         \App\Charts\NotulenChart::class,
+    //         \App\Charts\PieChart::class,
+    //         \App\Charts\NotulenPerOrganization::class,
+    //     ]);
+    // }
+    public function boot()
     {
-        $charts->register([
-            \App\Charts\SampleChart::class,
-            \App\Charts\NotulenChart::class,
-            \App\Charts\PieChart::class,
-            \App\Charts\NotulenPerOrganization::class,
-        ]);
+       
     }
 }
