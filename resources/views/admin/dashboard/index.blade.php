@@ -143,7 +143,7 @@
   <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
   <!-- Your application script -->
 
-   <script>
+   {{-- <script>
     const notulen_chart = new Chartisan({
       el: '#notulenchart',
       url: "@chart('notulen_chart')",
@@ -178,7 +178,7 @@
           .datasets([{ type: 'line', fill: true }])
           // .tooltip(),
     });
-  </script>
+  </script> --}}
 
   {{-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> --}}
 {{-- 
