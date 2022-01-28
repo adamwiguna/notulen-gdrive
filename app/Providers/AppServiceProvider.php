@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 
-use ConsoleTVs\Charts\Registrar as Charts;
+use consoletvs\charts\Registrar as Charts;
 use App\Charts\SampleChart;
 use Illuminate\Support\ServiceProvider;
 
