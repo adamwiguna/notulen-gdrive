@@ -120,7 +120,7 @@
 <!-- Chartisan -->
 <script src="https://unpkg.com/@chartisan/chartjs@^2.1.0/dist/chartisan_chartjs.umd.js"></script>
 
-<script>
+{{-- <script>
     const notulen_chart = new Chartisan({
       el: '#chart',
       url: "@chart('notulen_per_organization')",
@@ -131,6 +131,6 @@
           .legend({position: 'bottom'})
           // .tooltip(),
     });
-  </script>
+  </script> --}}
 <!-- Your application script -->
 @endsection
