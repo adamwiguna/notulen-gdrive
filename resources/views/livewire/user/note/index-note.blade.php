@@ -84,20 +84,6 @@
         </div>
     </div>
 
-    {{-- <div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
-        <div id="liveToast" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
-          <div class="toast-header">
-            <img src="..." class="rounded me-2" alt="...">
-            <strong class="me-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-          </div>
-          <div class="toast-body">
-            Hello, world! This is a toast message.
-          </div>
-        </div>
-      </div>
-         --}}
     @if (session()->has('message'))
     <div class="alert alert-success alert-dismissible fade show rounded-0 " role="alert" >
         <i class="bi bi-check-circle-fill"></i> {{ session('message') }} 
@@ -151,10 +137,10 @@
             <small>
                 <h5 class="card-title mb-1">
                     {{-- {{ $note->id }} --}}
-                    {{ $note->title }}
                     @if ( $note->noteDistributions->where('is_read', 0)->where('receiver_position_id', auth()->user()->position_id)->count() > 0)
                         <span class="badge bg-danger">Baru</span>   
                     @endif
+                    {{ $note->title }}
                 </h5>
                 {{-- <h5 class="card-title mb-1">
                     {{ $note->user_id }}
@@ -215,13 +201,13 @@
                     @foreach ($note->photos as $photo)
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }} bg-secondary" style="aspect-ratio: 16/9; overflow:hidden;     ">
                             {{-- <a href="{{ $photo->url }}"> --}}
-                            <a data-bs-toggle="modal" data-bs-target="#exampleModal{{ $photo->id }}">
+                            <a data-bs-toggle="modal" data-bs-target="#exampleModalPhoto{{ $photo->id }}">
                                 <img src="{{ $photo->url }}" class="d-block w-100 shadow" alt="" style=" object-fit:  cover;  height:100%; object-position: center;">
                             </a>
                         </div>
                         
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal{{ $photo->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModalPhoto{{ $photo->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-fullscreen" >
                             <div class="modal-content bg-info bg-dark" data-bs-dismiss="modal" >
                                 <div class="modal-body" >
