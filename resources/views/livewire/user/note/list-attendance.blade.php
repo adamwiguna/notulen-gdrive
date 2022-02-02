@@ -15,6 +15,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    <div class="overflow-auto"  style="aspect-ratio: 8/5;">
     <table class="table mx-1 small table-sm">
         <thead>
             <tr>
@@ -63,4 +64,5 @@
             @endforelse
         </tbody>
     </table>
+    </div>
 </div>

@@ -83,9 +83,33 @@
           
         </div>
     </div>
+
+    {{-- <div class="position-fixed top-50 start-50 translate-middle p-3" style="z-index: 11">
+        <div id="liveToast" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            Hello, world! This is a toast message.
+          </div>
+        </div>
+      </div>
+         --}}
     @if (session()->has('message'))
-    <div class="alert alert-success alert-dismissible fade show rounded-0" role="alert">
+    <div class="alert alert-success alert-dismissible fade show rounded-0 " role="alert" >
         <i class="bi bi-check-circle-fill"></i> {{ session('message') }} 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+       
+    @if (session()->has('note-complete'))
+    <div class="alert alert-success alert-dismissible fade show rounded-0  " role="alert" >
+        Berhasil <i class="bi bi-check-circle-fill"></i>  <br>
+         Anda telah berhasil menyelesaikan Notulen <br>
+        <strong> {{ session('note-complete') }}   </strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif

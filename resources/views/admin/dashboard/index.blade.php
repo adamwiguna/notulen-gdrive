@@ -13,9 +13,9 @@
                   <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
                           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                              Jabatan Kosong
+                              Jabatan / Jabatan Kosong
                           </div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $freePosition }}</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPosition }} / {{ $freePosition }}</div>
                       </div>
                       <div class="col-auto">
                       <h1 class=" text-secondary">
@@ -35,9 +35,9 @@
                   <div class="row no-gutters align-items-center">
                       <div class="col mr-2">
                           <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                              User tanpa Jabatan
+                              User / User tanpa Jabatan
                           </div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $freeUser }}</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalUser }} / {{ $freeUser }}</div>
                       </div>
                       <div class="col-auto">
                          <h1 class=" text-secondary">

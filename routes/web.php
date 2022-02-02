@@ -76,6 +76,23 @@ Route::middleware(['auth'])->group(function () {
         // Route::get('notes', App\Http\Livewire\User\Note\Notes::class);
         
         Route::resource('note', App\Http\Controllers\User\NoteController::class);
+
+        Route::get('create-step-1/note/{note}', [App\Http\Controllers\User\NoteController::class, 'createStep1'])->name('create-step-1.note');
+        Route::post('create-step-1/note/{note}', [App\Http\Controllers\User\NoteController::class, 'storeStep1'])->name('store-step-1.note');
+
+        Route::get('create-step-2/note/{note}', [App\Http\Controllers\User\NoteController::class, 'createStep2'])->name('create-step-2.note');
+        Route::post('create-step-2/note/{note}', [App\Http\Controllers\User\NoteController::class, 'storeStep2'])->name('store-step-2.note');
+        Route::delete('create-step-2/note/{note}/{photo}', [App\Http\Controllers\User\NoteController::class, 'destroyPhoto'])->name('destroy-step-2.note');
+
+        Route::get('create-step-3/note/{note}', [App\Http\Controllers\User\NoteController::class, 'createStep3'])->name('create-step-3.note');
+        Route::post('create-step-3/note/{note}', [App\Http\Controllers\User\NoteController::class, 'storeStep3'])->name('store-step-3.note');
+        Route::delete('create-step-3/note/{note}/{attendance}', [App\Http\Controllers\User\NoteController::class, 'destroyAttendance'])->name('destroy-step-3.note');
+
+        Route::get('create-step-4/note/{note}', [App\Http\Controllers\User\NoteController::class, 'createStep4'])->name('create-step-4.note');
+        Route::post('create-step-4/note/{note}', [App\Http\Controllers\User\NoteController::class, 'createStep4'])->name('store-step-4.note');
+        
+        Route::get('create-complete/note/{note}', [App\Http\Controllers\User\NoteController::class, 'complete'])->name('create-complete.note');
+
         Route::get('export/note/{note}', [App\Http\Controllers\User\NoteController::class, 'export2'])->name('export.note');
         Route::get('share/note/{note}', [App\Http\Controllers\User\NoteController::class, 'share'])->name('share.note');
 

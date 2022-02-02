@@ -5,9 +5,13 @@ namespace App\Http\Controllers\User;
 use DOMDocument;
 use App\Models\Note;
 use App\Models\User;
+use App\Models\Photo;
+use App\Models\Attendance;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\NoteDistribution;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -31,15 +35,132 @@ class NoteController extends Controller
      */
     public function create()
     {
-        return view('user.note.create');
+        Note::where('user_id', auth()->user()->id)->where('slug', null)->delete();
+
+        $note = Note::create([
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return redirect()->route('user.create-step-1.note', ['note' => $note]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function createStep1(Note $note)
+    {
+    //    dd($note->id);
+        return view('user.note.create', ['note' => $note]);
+    }
+
+    public function storeStep1(Request $request, Note $note)
+    {
+        // dd($note);
+        $validatedData = $request->validate([
+            'slug' => "required|max:254|unique:notes,slug",
+            'title' => "required|max:254",
+            'organizer' => "required|max:254",
+            'location' => "required|max:254",
+            'date' => "required|max:254",
+            'description' => "nullable|max:254",
+            'content' => "required",
+        ]);
+
+        $note->update([
+            'slug' => $note->slug??$request->slug,
+            'title' => $request->title,
+            'organizer' => $request->organizer,
+            'location' => $request->location,
+            'date' => $request->date,
+            'description' => $request->description,
+            'content' => $request->content,
+            'user_id' => auth()->user()->id,
+            'position_id' => auth()->user()->position->id,
+            // 'division_id' => auth()->user()->division->id,
+            'organization_id' => auth()->user()->organization->id,
+        ]);
+
+        return redirect()->route('user.create-step-2.note', ['note' => $note]);
+
+      
+    }
+
+    public function createStep2(Note $note)
+    {
+        return view('user.note.photo-create', ['note' => $note]);
+    }
+    
+
+    public function storeStep2(Request $request, Note $note)
+    {
+        $request->validate([
+            'photo' => 'mimes:jpeg,bmp,png,jpg|max:2048',
+        ]);
+        
+        $ext = strtolower($request->photo->getClientOriginalExtension());
+        $image_name = Str::random(50).'_'.time();
+        $image_full_name = $image_name.'.'.$ext;
+        $upload_path = 'public/photos/'.$note->id.'/';
+        $image_url = '/'.$upload_path.$image_full_name;
+        $request->photo->move($upload_path, $image_full_name);
+        
+        $photo = new Photo;
+        $photo->url = $image_url;
+        $photo->note_id = $note->id;
+        $photo->save();
+       
+
+        return redirect()->back();
+    }
+
+    public function destroyPhoto(Note $note, Photo $photo)
+    {
+        $photo->delete();
+        File::delete(public_path($photo->url));
+        session()->flash('message' , 'Foto berhasil dihapus');
+        
+        return redirect()->back();
+    }
+    
+    public function createStep3(Note $note)
+    {
+        return view('user.note.attendance-create', ['note' => $note]);
+    }
+
+    public function storeStep3(Request $request, Note $note)
+    {
+        $request->validate([
+            'name' => 'required|max:100',
+            'position' => 'required|max:100',
+            'organization' => 'required|max:100',
+        ]);
+
+        Attendance::create([
+            'note_id' => $note->id,
+            'name' => $request->name,
+            'position' => $request->position,
+            'organization' => $request->organization,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function destroyAttendance(Note $note, Attendance $attendance)
+    {
+        $attendance->delete();
+        
+        return redirect()->back();
+    }
+
+    public function createStep4(Note $note)
+    {
+        return view('user.note.share-create', ['note' => $note]);
+    }
+
+    public function complete(Note $note)
+    {
+        session()->flash('note-complete' , $note->title);
+        return redirect()->route('user.dashboard');
+    }
+
+
     public function store(Request $request)
     {
         // dd($request->body);

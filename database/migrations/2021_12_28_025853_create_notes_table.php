@@ -15,18 +15,18 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id(); 
-            $table->string('slug')->unique();
-            $table->string('title');
+            $table->string('slug')->unique()->nullable();
+            $table->string('title')->nullable();
             $table->foreignID('user_id');
             $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->foreignID('position_id')->nullable();
             // $table->foreignID('division_id')->nullable();
             $table->foreignID('organization_id')->nullable();
-            $table->string('organizer');
-            $table->text('content');
-            $table->date('date');
-            $table->softDeletes();
+            $table->string('organizer')->nullable();
+            $table->text('content')->nullable();
+            $table->date('date')->nullable();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

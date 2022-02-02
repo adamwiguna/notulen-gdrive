@@ -20,6 +20,7 @@
               </div>
         </div>
     </div>
+    <div class="overflow-auto" style="aspect-ratio: 8/5;">
     @if (auth()->user()->is_admin || auth()->user()->position->can_share_note)
         <table class="table bg-white border-5 shadow-sm caption-top">
             <caption>Daftar diluar Instansi</caption>
@@ -207,4 +208,5 @@
             @endforelse
         </tbody>
     </table>
+    </div>
 </div>
