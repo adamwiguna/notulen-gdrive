@@ -30,12 +30,15 @@
             Kelola User
           </a>
         </li>
-        {{-- <li class="nav-item">
-          <a class="nav-link  {{$sidebar == 'mutasi' ? 'active' :''}}" href="{{ route('operator.user.mutasi') }}">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Masuk Ke-Aplikasi</span>
+        </h6>
+        <li class="nav-item">
+          <a class="nav-link  {{$sidebar == 'mutasi' ? 'active' :''}}" href="/user/home">
             <i class="bi bi-person-fill"></i>
             Mutasi User
           </a>
-        </li> --}}
+        </li>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Account Settings</span>

@@ -14,7 +14,7 @@ class Organization extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [''];
 
     /**
      * Get all of the users for the Organization

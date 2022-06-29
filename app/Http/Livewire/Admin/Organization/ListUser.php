@@ -114,7 +114,8 @@ class ListUser extends Component
     public function render()
     {
         // dd($this->sidebar);
-        $this->userModel = User::where('id', '>', 0)->where('is_operator', false)->where('is_admin', false);
+        // $this->userModel = User::where('id', '>', 0)->where('is_operator', false)->where('is_admin', false);
+        $this->userModel = User::where('id', '>', 0)->where('is_admin', false);
         if($this->organization instanceof Organization){
             $this->getOrganization = $this->organization;
             $this->organizationId = $this->organization->id;

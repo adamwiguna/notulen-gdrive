@@ -64,19 +64,19 @@
                 
                 {{-- <input wire:model="noteCreator" class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  > Sendiri --}}
                 <input wire:model="noteCreator" class="btn-check btn-sm" type="checkbox" id="flexCheckDefault" onclick="this.blur();"  value="" >
-                <label class="btn btn-outline-success btn-sm " for="flexCheckDefault" onclick="this.blur();">
+                <label class=" btn  {{ $noteCreator == true ? 'btn-primary' : 'btn-light border ' }} btn-sm" for="flexCheckDefault" onclick="this.blur();">
                     Saya
                 </label> 
                 <input wire:model="noteNew" class="btn-check" type="checkbox" id="flexCheckDefault3" onclick="this.blur();"  value="" >
-                <label class="btn btn-outline-success btn-sm" for="flexCheckDefault3" onclick="this.blur();">
+                <label class="btn {{ $noteNew == true ? 'btn-primary' : 'btn-light border ' }} btn-sm" for="flexCheckDefault3" onclick="this.blur();">
                     Baru
                 </label> 
                 <input wire:model="noteReceived" class="btn-check" type="checkbox" id="flexCheckDefault1" onclick="this.blur();" >
-                <label class="btn btn-outline-success btn-sm" for="flexCheckDefault1" onclick="this.blur();">
+                <label class="btn {{ $noteReceived == true ? 'btn-primary' : 'btn-light border ' }} btn-sm" for="flexCheckDefault1" onclick="this.blur();">
                     Diterima
                 </label>
                 <input wire:model="noteSent" class="btn-check" type="checkbox" id="flexCheckDefault2" onclick="this.blur();" >
-                <label class="btn btn-outline-success btn-sm" for="flexCheckDefault2" onclick="this.blur();">
+                <label class="btn {{ $noteSent == true ? 'btn-primary' : 'btn-light border ' }} btn-sm" for="flexCheckDefault2" onclick="this.blur();">
                     Dikirim
                 </label>
             </div>
@@ -131,36 +131,27 @@
               </div>
         </div>
     </div>
+    <div wire:loading.remove wire:target="noteNew, noteReceived, noteSent, noteCreator, perPage, cari, previousPage, nextPage, gotoPage">
 @forelse ($notes as $note)
     <div wire:loading.remove wire:target="noteNew, noteReceived, noteSent, noteCreator, perPage, cari, previousPage, nextPage, gotoPage" class="card mb-2 shadow-sm rounded-0 p-0 {{ $note->noteDistributions->where('is_read', 0)->where('receiver_position_id', auth()->user()->position_id)->count() > 0 ? 'border-danger border-1' : '' }}">
-        <div class="card-header bg-white small justify-content-between d-flex flex py-1 px-2 ">
-            <small>
-                <h5 class="card-title mb-1">
+       
+        <div class=" bg-white small justify-content-between d-flex pt-1  px-2 ">
+            <small >
+                
+                <h5 class="e ">
                     {{-- {{ $note->id }} --}}
                     @if ( $note->noteDistributions->where('is_read', 0)->where('receiver_position_id', auth()->user()->position_id)->count() > 0)
-                        <span class="badge bg-danger">Baru</span>   
+                            <span class="text-danger "> <i class="bi bi-bookmark-fill"></i> </span>   
                     @endif
                     {{ $note->title }}
                 </h5>
+            
                 {{-- <h5 class="card-title mb-1">
                     {{ $note->user_id }}
                     {{ $note->user->name }}
                 </h5> --}}
-                @if (auth()->user()->position_id !== null)
-                <div>
-                    @foreach ($note->noteDistributions->where('receiver_position_id', auth()->user()->position->id) as $noteDistribution)
-                        <i class="bi bi-share-fill"></i> {{ $noteDistribution->positionSender->name?? '-'}} 
-                    @endforeach
-                </div>
-                @endif
-                @can('manage-this-note', $note)
-                <div>
-                    @foreach ($note->noteDistributions as $noteDistribution)
-                        <i class="bi bi-person-check"></i> {{ $noteDistribution->positionReceiver->name ?? ''}} |
-                    @endforeach
-                </div>
-                @endcan
             </small>
+            
             <div class="dropdown mx-1">
               
                 @can('manage-this-note', $note)
@@ -187,16 +178,19 @@
                 @endcan
             </div>
         </div>
-        
+       
+       
+       {{-- <hr class="my-0 mx-1 py-0 px-1"> --}}
+      
 
         {{-- Carousel Photos --}}
         @if ($note->photos->count() > 0)
-            <div id="carouselExampleIndicators{{ $note->id }}" class="carousel slide" data-bs-ride="carousel"  >
+            <div id="carouselExampleIndicators{{ $note->id }}" class="carousel slide p-0 m-0" data-bs-ride="carousel"  >
                 <div class="carousel-indicators">
                     @foreach ($note->photos as $photo)
                         <button type="button" data-bs-target="#carouselExampleIndicators{{ $note->id }}" data-bs-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}" aria-current="{{ $loop->first ? 'true' : '' }}" aria-label="Slide {{ $loop->iteration }}"></button>            
                     @endforeach
-            </div>
+                </div>
                 <div class="carousel-inner" >
                     @foreach ($note->photos as $photo)
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }} bg-secondary" style="aspect-ratio: 16/9; overflow:hidden;     ">
@@ -234,8 +228,30 @@
                         <img src="https://via.placeholder.com/1600x900?text=Foto+Tidak+Ditemukan" class="d-block w-100" alt="" style=" object-fit:  contain;  height:100%; object-position: center;">
                     </div>
                 @endif
+                @if (auth()->user()->position_id !== null)
+                <small>
+                <div class="px-2">
+                    @foreach ($note->noteDistributions->where('receiver_position_id', auth()->user()->position_id) as $noteDistribution)
+                        <i class="bi bi-share-fill "></i> 
+                        {{ $noteDistribution->positionSender->name ?? '-'}} - {{ $noteDistribution->userSender->name?? '-'}} 
+                    @endforeach
+                </div>
+                </small>
+                {{-- <hr class="my-0 mx-1 py-0 px-1"> --}}
+                @endif
+                @can('manage-this-note', $note)
+                <small>
+                    <div class="px-2 pb-1">
+                        @foreach ($note->noteDistributions as $noteDistribution)
+                        <i class="bi bi-person-check"></i> {{ $noteDistribution->positionReceiver->name ?? ''}} |
+                        @endforeach
+                    </div>
+                </small>
+                {{-- <hr class="my-0 mx-1 py-0 px-1"> --}}
+                @endcan
         <div class="card-body small py-1 px-2 mb-2">
-            
+
+              
             {{ $note->description??'' }} <br>
             <small>
                 <button type="button" class="btn btn-dark btn-sm small text-small p-1" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $note->id }}">
@@ -413,6 +429,7 @@
     {{-- </div>
 </div> --}}
 @endforelse
+    </div>
 
 <div class="m-5 py-1">
 

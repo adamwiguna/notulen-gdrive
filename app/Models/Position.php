@@ -15,7 +15,8 @@ class Position extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [''];
+    // protected $fillable = ['name', 'alias', 'organization_id'];
 
     
 

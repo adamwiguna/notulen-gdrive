@@ -7,6 +7,10 @@
     @endif
     
     <input wire:model="cari" type="text" class="form-control mb-2" placeholder="Cari">  
+    {{-- <table></table>
+    @foreach ($noteDistributions as $noteDistribution)
+        <i class="bi bi-person-check"></i> {{ $noteDistribution->positionReceiver->name ?? ''}} |
+    @endforeach --}}
     <div wire:loading.inline wire:target="cari, shareTo, unShareTo" class="">
         <div class=" text-center">
             <div class="spinner-grow " style="width: 3rem; height: 3rem;" role="status">
@@ -20,7 +24,7 @@
               </div>
         </div>
     </div>
-    <div class="overflow-auto" style="aspect-ratio: 8/5;">
+    <div class="overflow-auto">
     @if (auth()->user()->is_admin || auth()->user()->position->can_share_note)
         <table class="table bg-white border-5 shadow-sm caption-top">
             <caption>Daftar diluar Instansi</caption>
@@ -35,6 +39,9 @@
                 @forelse ($positionsOutsideOrganization as $position)   
                     <tr>
                         <td>
+                            @if ($position->asReceiver->where('note_id', $note->id)->count() > 0)
+                                <span class="badge bg-success">Terkirim</span>       
+                            @endif
                             {{-- {{ $position->id }} |  --}}
                             <a class=" text-decoration-none text-dark font-weight-bolder" data-bs-toggle="collapse" href="#collapseExample{{ $position->id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                                 {{ $position->name }} 
@@ -123,6 +130,9 @@
             @forelse($positions as $position)   
                 <tr>
                     <td>
+                        @if ($position->asReceiver->where('note_id', $note->id)->count() > 0)
+                            <span class="badge bg-success">Terkirim</span>       
+                        @endif
                          {{-- {{ $position->id }} |  --}}
                          <a class=" text-decoration-none text-dark font-weight-bolder" data-bs-toggle="collapse" href="#collapseExample{{ $position->id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                             {{ $position->name }} 

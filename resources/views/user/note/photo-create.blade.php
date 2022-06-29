@@ -45,8 +45,9 @@
     </div>
     @endif
 
-
-    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 overflow-auto" style="aspect-ratio: 4/3;">
+    
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 overflow-auto" >
+    {{-- <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 overflow-auto" style="aspect-ratio: 4/3;"> --}}
     @foreach ($note->photos as $photo)
         <div class="col carousel slide">
             <div class="shadow-sm carousel-inner">

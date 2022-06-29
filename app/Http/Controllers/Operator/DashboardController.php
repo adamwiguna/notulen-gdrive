@@ -61,7 +61,7 @@ class DashboardController extends Controller
         foreach ($monthLables as $keyMonth => $month) {
             $data['data'][] = $notes->has($month) ? $notes[$month]->count() : 0;
             $data['send'][] = $noteSends->has($month) ?  $noteSends[$month]->count() : 0;
-            $data['read'][] = $noteReads->has($month) ?  $noteSends[$month]->count() : 0;
+            $data['read'][] = $noteReads->has($month) ?  $noteReads[$month]->count() : 0;
         }
 
         // dd($monthLables);
@@ -92,8 +92,10 @@ class DashboardController extends Controller
             'sidebar' => 'dashboard',
             'totalPosition' => Position::where('organization_id', auth()->user()->organization_id)->get()->count(),
             'freePosition' => Position::where('organization_id', auth()->user()->organization_id)->whereDoesntHave('users')->get()->count(),
-            'totalUser' => User::where('organization_id', auth()->user()->organization_id)->where('is_operator', false)->get()->count(),
-            'freeUser' => User::where('organization_id', auth()->user()->organization_id)->where('position_id', null)->where('is_operator', false)->get()->count(),
+            'totalUser' => User::where('organization_id', auth()->user()->organization_id)->get()->count(),
+            // 'totalUser' => User::where('organization_id', auth()->user()->organization_id)->where('is_operator', false)->get()->count(),
+            'freeUser' => User::where('organization_id', auth()->user()->organization_id)->where('position_id', null)->get()->count(),
+            // 'freeUser' => User::where('organization_id', auth()->user()->organization_id)->where('position_id', null)->where('is_operator', false)->get()->count(),
             'notesCount' => Note::where('organization_id', auth()->user()->organization_id)->get()->count(),
             'notesDistributions' => NoteDistribution::whereHas('note', function($query){$query->where('organization_id', auth()->user()->organization_id);})->get()->count(),
             // 'notesReadCount' => Note::where('organization_id', auth()->user()->organization_id)->whereHas('noteDistributions', function($query){$query->where('is_read', true);})->get()->count(),

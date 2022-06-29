@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Share extends Component
 {
     public $note;
+    public $noteDistributiions;
 
     public $cari;
 
@@ -59,8 +60,11 @@ class Share extends Component
                             });
         }
 
+        
+
         return view('livewire.user.note.share', [
             'note' => $this->note,
+            'noteDistributions' => NoteDistribution::where('note_id', $this->note->id)->get(),
             // 'users' => $users->latest()->get()->except(Auth::id()),
             'positions' => $positions->latest()->get()->except(auth()->user()->position_id),
             'positionsOutsideOrganization' => $positionsOutsideOrganization->latest()->get()->except(auth()->user()->position_id),

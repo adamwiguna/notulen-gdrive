@@ -72,9 +72,9 @@ class NoteController extends Controller
             'description' => $request->description,
             'content' => $request->content,
             'user_id' => auth()->user()->id,
-            'position_id' => auth()->user()->position->id,
+            'position_id' => auth()->user()->position_id,
             // 'division_id' => auth()->user()->division->id,
-            'organization_id' => auth()->user()->organization->id,
+            'organization_id' => auth()->user()->organization_id,
         ]);
 
         return redirect()->route('user.create-step-2.note', ['note' => $note]);
@@ -95,9 +95,11 @@ class NoteController extends Controller
         ]);
         
         $ext = strtolower($request->photo->getClientOriginalExtension());
-        $image_name = Str::random(50).'_'.time();
+        $image_name = $note->id.'_'.Str::random(50).'_'.time();
         $image_full_name = $image_name.'.'.$ext;
-        $upload_path = 'public/photos/'.$note->id.'/';
+        $upload_path = 'public/photos/';
+        // $image_full_name = $image_name.'.'.$ext;
+        // $upload_path = 'public/photos/'.$note->id.'/';
         $image_url = '/'.$upload_path.$image_full_name;
         $request->photo->move($upload_path, $image_full_name);
         
@@ -258,10 +260,10 @@ class NoteController extends Controller
             'date' => $request->date,
             'description' => $request->description,
             'content' => $request->body,
-            'user_id' => auth()->user()->id,
-            'position_id' => auth()->user()->position->id,
+            // 'user_id' => auth()->user()->id,
+            // 'position_id' => auth()->user()->position->id,
             // 'division_id' => auth()->user()->division->id,
-            'organization_id' => auth()->user()->organization->id,
+            // 'organization_id' => auth()->user()->organization->id,
         ]);
 
         
@@ -381,8 +383,9 @@ class NoteController extends Controller
         $section->addText('Pembahasan:');
         $value = $note->content;
         $value = str_replace("<br><br>","<br/>",$value);
-        $value = str_replace("<br>","</div><div>",$value);
+        $value = str_replace("<br>","<div></div>",$value);
         $html = $value;
+        // dd($html);
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html, false, false);
         // $doc = new DOMDocument();
         // $doc->loadHTML($note->content);

@@ -91,7 +91,7 @@
                         </td> 
                         <td>{{ $position->alias }} {!! $position->is_staff ? '<i class="bi bi-people-fill"></i>' : '' !!}</td>
                         <td>
-                            {{ $position->asReceiver->count() }}
+                            {{ $position->asReceiver->isNotEmpty()? $position->asReceiver->toQuery()->whereHas('note')->get()->count() : '0'}}
                         </td>
                         <td class=" justify-content-between">
                             <div class=" fst-italic"> 

@@ -10,7 +10,7 @@
     <div class="col-3 text-center">Kirim</div>
 </div>
 <div class="progress mt-2 mb-5">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">(1/4)</div>
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><i class="bi bi-clipboard">(1/4)</i></div>
 </div>
 
 <h4 class=" text-center mt-3 mb-3 text-decoration-underline">Langkah 1 : Form Notulen</h4>

@@ -1,5 +1,7 @@
 <?php
 
+// use File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\User\Note\Notes;
 use App\Http\Controllers\LoginController;
@@ -40,6 +42,25 @@ Route::middleware(['auth'])->group(function () {
                 'sidebar' => 'password'
             ]);
         })->name('password');
+
+        Route::get('zip-photo', function () {
+            $zip = new \ZipArchive();
+            // dd(date("Y_m_d__H_i_s"));
+            $fileName = 'fotoPerTanggal'.date("Y_m_d__H_i_s").'.zip';
+            if ($zip->open(public_path($fileName), \ZipArchive::CREATE)== TRUE)
+            {
+                $files = File::files(public_path('public/photos/'));
+                // dd($files);
+                foreach ($files as $key => $value){
+                    $relativeName = basename($value);
+                    $zip->addFile($value, $relativeName);
+                }
+                $zip->close();
+            }
+
+            return response()->download(public_path($fileName));
+
+        })->name('downlod-photo');
         
     });
 

@@ -91,6 +91,12 @@
         <li class="nav-item">
           <a class="nav-link {{ Route::is(['user.setting']) ? 'active' : '' }}" aria-current="page" href="{{ route('user.setting') }}"><i class="bi bi-gear"></i> Profile</a>
         </li>
+        @if (auth()->user()->is_operator)
+        <li class="nav-item">
+          <a class="nav-link {{ Route::is(['user.setting']) ? 'active' : '' }}" aria-current="page" href="/operator/dashboard"><i class="bi bi-gear"></i> Operator</a>
+        </li>
+            
+        @endif
         
       </ul>
       <form class="d-flex" action="{{ route('logout') }}" method="POST">
