@@ -49,7 +49,8 @@ Route::middleware(['auth'])->group(function () {
             $fileName = 'fotoPerTanggal'.date("Y_m_d__H_i_s").'.zip';
             if ($zip->open(public_path($fileName), \ZipArchive::CREATE)== TRUE)
             {
-                $files = File::files(public_path('public/photos/'));
+                $files = File::files(public_path(env('DOWNLOAD_PHOTO_PATH')));
+                // $files = File::files(public_path('public/photos/'));
                 // dd($files);
                 foreach ($files as $key => $value){
                     $relativeName = basename($value);
