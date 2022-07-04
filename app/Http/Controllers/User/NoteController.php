@@ -119,7 +119,7 @@ class NoteController extends Controller
             report($e);
             // session()->forget('message-gdrive');
             session()->flash('message-gdrive-failed' , 'Foto GAGAL dibackup ke Google-Drive');
-            dd($e);
+            // dd($e);
             // return false;
         }
 
