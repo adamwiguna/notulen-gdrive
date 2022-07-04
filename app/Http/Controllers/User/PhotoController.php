@@ -46,8 +46,10 @@ class PhotoController extends Controller
 
     public function destroy(Note $note, Photo $photo)
     {
+        dd(str_replace('/public/photos/','', $photo->url));
         $photo->delete();
         File::delete(public_path($photo->url));
+        Storage::delete($photo->url);
         session()->flash('message' , 'Foto berhasil dihapus');
         
         return redirect()->route('user.photo.create', ['note' => $note]);

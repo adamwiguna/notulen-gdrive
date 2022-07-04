@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use PhpOffice\PhpWord\Element\Table;
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 class NoteController extends Controller
@@ -93,6 +94,8 @@ class NoteController extends Controller
         $request->validate([
             'photo' => 'mimes:jpeg,bmp,png,jpg|max:2048',
         ]);
+
+      
         
         $ext = strtolower($request->photo->getClientOriginalExtension());
         $image_name = $note->id.'_'.Str::random(50).'_'.time();
@@ -101,19 +104,51 @@ class NoteController extends Controller
         // $image_full_name = $image_name.'.'.$ext;
         // $upload_path = 'public/photos/'.$note->id.'/';
         $image_url = '/'.$upload_path.$image_full_name;
+
+        // Storage::disk('google')->putFileAs(
+        //     $request->file('photo')->getPathName(), $request->file('photo'), $image_full_name
+        // );
+        
+        
+        try {
+            $content = $request->file('photo')->getContent();
+            Storage::disk('google')->put($image_full_name, $content);
+            session()->flash('message-gdrive' , 'Foto berhasil dibackup ke Google-Drive');
+            // Validate the value...
+        } catch (\Exception  $e) {
+            report($e);
+            // session()->forget('message-gdrive');
+            session()->flash('message-gdrive-failed' , 'Foto GAGAL dibackup ke Google-Drive');
+            dd($e);
+            // return false;
+        }
+
         $request->photo->move($upload_path, $image_full_name);
         
         $photo = new Photo;
         $photo->url = $image_url;
         $photo->note_id = $note->id;
         $photo->save();
-       
 
+        // dd($request->photo->getRealPath());
+        // dd($request->file());
+        // $content = $request->file('photo')->getContent();
+        // Storage::disk('google')->put('example.jpg', $content);
+     
+
+        // Storage::disk('google')->put('example.jpg', $content);
+       
+        session()->flash('message' , 'Foto berhasil ditambah');
         return redirect()->back();
     }
 
     public function destroyPhoto(Note $note, Photo $photo)
     {
+        // dd(str_replace('/public/photos/','', $photo->url));
+        $photoName =str_replace('/public/photos/','', $photo->url);
+        // dd($photoName);
+        $delete = Storage::disk('google')->delete('26295_GbNlvCpf9ABAgG4bE5h6B3zJ6n8GElp9eW7AZHkYY6BX0FADvt_1656647575.jpeg');
+        // dd($delete);
         $photo->delete();
         File::delete(public_path($photo->url));
         session()->flash('message' , 'Foto berhasil dihapus');

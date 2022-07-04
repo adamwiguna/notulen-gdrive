@@ -44,6 +44,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
+    @if (session()->has('message-gdrive'))
+    <div class="alert alert-primary alert-dismissible fade show rounded-0" role="alert">
+        {{ session('message-gdrive') }} 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    @if (session()->has('message-gdrive-failed'))
+    <div class="alert alert-danger alert-dismissible fade show rounded-0" role="alert">
+        {{ session('message-gdrive-failed') }} 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
 
     
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 g-3 overflow-auto" >
