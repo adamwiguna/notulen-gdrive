@@ -101,7 +101,7 @@ class OrganizationSeeder extends Seeder
                         'updated_at' => $date,
                     ]);
 
-                    $count = mt_rand(15, 200);
+                    $count = mt_rand(5, 20);
 
                     for ($k = 1; $k <= $count; $k++) {
 
