@@ -11,14 +11,10 @@ PANDUAN INSTALASI
    DB_PASSWORD=
 
 3. Jika ingin terkoneksi dengan google drive pada .env lakukan setting yang dimiliki untuk terhubung ke google drive
-   MAIL_MAILER=smtp
-   MAIL_HOST=mailhog
-   MAIL_PORT=1025
-   MAIL_USERNAME=null
-   MAIL_PASSWORD=null
-   MAIL_ENCRYPTION=null
-   MAIL_FROM_ADDRESS=null
-   MAIL_FROM_NAME="${APP_NAME}"
+   MAIN_GOOGLE_DRIVE_CLIENT_ID=
+   MAIN_GOOGLE_DRIVE_CLIENT_SECRET=
+   MAIN_GOOGLE_DRIVE_REFRESH_TOKEN=
+   MAIN_GOOGLE_DRIVE_FOLDER_ID=
 
 4. Setelah .env siap, buka terminal dan masuk ke folder project ini dan lakukan perintah
    php artisan migrate:fresh --seed
