@@ -26,4 +26,13 @@ PANDUAN INSTALASI
 
 5. Buka url http://127.0.0.1:8000 (default) setelah melakukan perintah diatas
 
-6. Akses sebagai Admin user:admin password:admin
+6. Akses sebagai role Admin user:admin password:admin
+7. Akses untuk role User: semua username selain Admin dan operator memilki password: user
+8. Untuk mengetahui username silahkan masuk sebagai Admin terlebih dahulu
+
+TENTANG APLIKASI
+
+1. Membuat Notulen Kegiatan dan Upload foto
+2. Berbagi Notulen pada user dalam aplikasi
+3. Pengelolaan User, Jabatan dan Organisasi (ADMIN)
+4. Foto yang diupload dapat tersimpan pada Google Drive jika memiliki credential yang dibutuhkan untuk terkoneksi ke Google Drive
