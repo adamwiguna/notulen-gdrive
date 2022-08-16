@@ -49,7 +49,7 @@ class PhotoController extends Controller
        
 
         try {
-            dd($request->photo);
+            // dd($request->photo);
             $content = $request->file('photo')->getContent();
             Storage::disk('google')->put($image_full_name, $content);
             session()->flash('message-gdrive' , 'Foto berhasil dibackup ke Google-Drive');
